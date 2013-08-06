@@ -1,0 +1,40 @@
+# README, Lei, 07/17/2013
+
+This directory contains:
+ 
+(1) IDL scripts to generate inputs of GEOS-Chem palneflight diagonstics
+    
+  get_dc8.pro		: IDL script to get DC-8 location and time, 
+			: called by make_planeflight.pro, if necessary
+
+  get_p3b.pro		: IDL script to get P3B location and time, 
+			: called by make_planeflight.pro, if necessary
+
+  get_wp3d.pro		: IDL script to get WP-3D location and time,
+			: called by make_planeflight.pro, if necessary
+
+  get_er2.pro		: IDL scirpt to get ER-2 location and time,
+			: called by make_planeflight.pro, if necessary
+			: available soon.
+
+  make_planeflight.pro	: Main script to make Planeflight files
+
+(2) Aircraft Navigation (NAV) files
+
+  ER2/			: ER-2 NAV files
+  DC8/			: DC-8 NAV files
+  P3B/			: P3B NAV files
+  WP3D/			: WP-3D NAV, MET and other files
+
+(3) Planeflight.hdr	: List of tracers to be saved, 
+			: used by make_planeflight.pro
+
+(4) output/		: Dir for saving Planeflight files,
+			: Should be known by GEOS-Chem
+
+
+To run the scripts:
+
+make_planeflight, 20130531
+or 
+make_planeflight, 20130531, /upload     

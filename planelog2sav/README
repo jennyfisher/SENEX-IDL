@@ -1,0 +1,60 @@
+# README, from Jenny Fisher, updated by Lei Zhu for SENEX.
+# 07/23/2013
+
+Description of files within this directory, organized from lowest level function to highest.
+
+1. read_planeflight_and_tracerinfo.pro
+Low level routine, not generally called by user. Reads a single plane.log file written by GEOS-Chem. Returns the contents as a structure. Structure tag names are the GEOS-Chem tracer names if the directory with the plane.log file also contains a tracerinfo.dat file.
+
+2. avg_geosgrid.pro
+Averages a data structure over the specified grid and time resolution. All of
+the fields within the structure are averages. Average calculated with the
+mean.
+
+3. planelog2flightmerge.pro
+Use this to read plane.log files. (Wrapper for read_planeflight_and_tracerinfo.pro.) After reading the plane.log file or files, this routine renames some of the structure tags more sensibly. It can average spatially and temporally over a GEOS-Chem grid.
+
+4. batch_planelog2flightmerge.pro
+Combinees one or more Planelog text files (written by GEOS-Chem) into a plane
+structure. Requires inputs for the date of flight or flights.
+
+--The following files are specific to SENEX--
+For future campaigns only the following files should need to be changed.
+
+5. senex_model_merge.pro
+Driver routine for batch_planelog2flightmerge. This script contains the dates
+of SENEX flights.
+YOU NEED TO UPDATE THIS FILE TO REFLECT THE ACTUAL FLIGHT DATES!
+
+6. senex_nrt_script.pro
+Driver routines for senex_model_merge.pro
+These files just contain the names of input (model run directories) and output
+directories for senex_model_merge.pro
+
+===================================
+
+Several other things:
+
+1. Before running the scripts, firstly we need to update IDL/gamap2/gamap_util/ctm_read_planeflight.pro
+
+   ARRSIZE  = 2000L ; Increased by lei, 07/19/13
+   VARSIZE  = 150L  ; Increased by lei, 07/23/13, as we have more tracers
+
+   ; Change the format based on planeflight_mod.F, Line 1643
+   ; Changed by Lei, 130630
+   Fmt = '(I5,X,A5,X,I8.8,X,I4.4,X,F7.2,X,F7.2,X,F7.2,X,'+ $
+          String( N_Data ) + '(e11.3,X))'
+
+2. Make sure you have mean_nan.pro and tapply.pro in the run folder, or IDL knows where to find them. They are from cdh's IDL tools. 
+
+3. Use updated tracerinfo.dat. And change the default tracerinfo.dat path in planelog2flightmerge.pro (Line 109)
+
+      ; Use READ_PLANEFLIGHT_AND_TRACERINFO in order to get standard GEOS-Chem
+      ; tracer names rather than default ND40 names
+      PLANE = READ_PLANEFLIGHT_AND_TRACERINFO( thisfile,$
+      !SENEX+'/planelog2sav/tracerinfo.dat')
+
+=====================================
+
+To run the code, we need to change flight dates in senex_model_merge.pro by hand, then in IDL type:
+.RUN senex_nrt_script

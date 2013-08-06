@@ -1,0 +1,9 @@
+Note:
+
+#1 
+Change file names of two files to make get_wp3d run, as it requires a file name ending with '_RA.ict'.
+Lei, 07/17/13
+
+            Original                         Now
+AircraftPos_NP3_20130525_RB.ict  --> AircraftPos_NP3_20130525_RA.ict
+AircraftPos_NP3_20130703_RB.ict  --> AircraftPos_NP3_20130525_RA.ict

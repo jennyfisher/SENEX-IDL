@@ -1,0 +1,32 @@
+# Input file for merge_average_senex script
+# Lei Zhu, 07/25/2013
+# About the data: 1-3: aircraft info; 4-17: chem; 18-21: aerosol 
+# CO2CH4 data has a bad ict format, NOT used here.
+# To run the model: ./merge_average_senex.x
+# Merged files will be stored at main data folder
+#=================================================================================
+#ID  | Keyword                   |  Input by the user
+  1  |Main SENEX data folder     : /home/lei/3Campaign/SENEX/field_data/WP3D/
+  2  |Process data at YYYYMMDD   : 20130708
+  3  |Total # of file types      : 20
+     |Name, Type 1               : AircraftMet
+     |Name, Type 2               : AircraftMis
+     |Name, Type 3               : AircraftPos
+     |Name, Type 4               : ACES
+     |Name, Type 5               : CARDS
+     |Name, Type 6               : CO
+     |Name, Type 7               : HCHO
+     |Name, Type 8               : HNO3HCOOH
+     |Name, Type 9               : NH3
+     |Name, Type 10              : NO
+     |Name, Type 11              : NO2
+     |Name, Type 12              : NOy
+     |Name, Type 13              : O3
+     |Name, Type 14              : PANs
+     |Name, Type 15              : SO2
+     |Name, Type 16              : VOCsPTRMS
+     |Name, Type 17              : SP2
+     |Name, Type 18              : NAerosol
+     |Name, Type 19              : CRDExt
+     |Name, Type 20              : AMS
+  4  |Average time (s)           : 60.00
