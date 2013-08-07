@@ -126,9 +126,6 @@ doy =  get_field_data_senex('doy', platform, flightdates, /minavg, $
 
 ; SENEX altitude is in meters, convert to km
 altp = altp*1d-3
-;;;;; KLUDGE!!!!
-doy=doy+1
-;;;;;
 
 ; Get model output for given species 
 if (~keyword_set(obs_only)) then $
