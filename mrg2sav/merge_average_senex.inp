@@ -6,8 +6,8 @@
 # Merged files will be stored at main data folder
 #=================================================================================
 #ID  | Keyword                   |  Input by the user
-  1  |Main SENEX data folder     : /home/lei/3Campaign/SENEX/field_data/WP3D/
-  2  |Process data at YYYYMMDD   : 20130708
+  1  |Main SENEX data folder     : /home/jaf/data/SENEX/field_data/WP3D/
+  2  |Process data at YYYYMMDD   : 20130710
   3  |Total # of file types      : 20
      |Name, Type 1               : AircraftMet
      |Name, Type 2               : AircraftMis
