@@ -101,7 +101,7 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
   ; So here we only look at simpile species
   Case field of
     'alt'    : field = 'GPSAlt'
-    'altp'    : field = 'PAlt'
+    'altp'   : field = 'PAlt'
     'lat'    : field = 'latitude'
     'lon'    : field = 'longitude'
     'press'  : field = 'PRESSURE'
@@ -118,7 +118,7 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
     'so2'    : field = 'SO2_ppbv'
     'pan'    : field = 'PAN_ppbv'
     'ppn'    : field = 'PPN_ppbv'
-    'ch3cn'  : field = 'acetonitrile_ppbv'
+    'ch3cn'  : field = 'acetonitrile_pptv'
     'ald2'   : field = 'acetaldehyde_pptv'
     'acet'   : field = 'acetone_pptv'
     'isop'   : field = 'isoprene_pptv'
@@ -151,6 +151,18 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
       ; Form the fractional DOY from the integer part and fractional part 
       Data = jday + utc / (24. * 3600.) 
  
+  ; Special Case for altitude 
+  endif else If (field eq 'GPSAlt' or field eq 'PAlt') then begin
+
+      Print, 'Reading altitude field from file: '+file+' ...'
+  
+      ; Read the appropriate altitude field
+      s = 'alt = ' + Platform + '.' + field
+      status = Execute( s )  
+
+      ; Convert from m to km
+      Data = alt/1d3
+   
   ; Special Case for SOx
   endif else If field eq 'sox' then begin
    

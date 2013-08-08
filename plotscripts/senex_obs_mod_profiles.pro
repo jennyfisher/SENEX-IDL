@@ -145,9 +145,6 @@ altp = altp[index]
 lat = lat[index]
 lon = lon[index]
  
-; Convert altitude from m to km
-altp = altp/1d3
- 
 ; From CDH:
 ; Add this later? (jaf, 8/8/13)
 ;; Read ground elevation
