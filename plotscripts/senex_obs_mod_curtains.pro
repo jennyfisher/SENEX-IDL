@@ -216,7 +216,7 @@ axis, !x.window[0], /xaxis, /norm, xticks=7, xminor=1, color=1,$
 ; Specify filename for timeseries files
 ;tsfi = '/as/scratch/bmy/NRT/run.NA/timeseries/ts'+$
 ;tsfi = '/as/cache/2013-08/bmy/NRT_archive/NA_ts/ts'+$
-tsfi = '/home/skim/SEAC4RS_Mission_Code/NRT/run.NA/timeseries/ts'+$
+tsfi = '/home/skim/SEAC4RS/SEAC4RS_Mission_Code/NRT/run.NA/timeseries/ts'+$
        flightdates+'.bpch'
 
 ;s='spawn,''gunzip '+ tsfi
