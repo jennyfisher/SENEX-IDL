@@ -51,28 +51,21 @@
 ;-----------------------------------------------------------------------
 
 
-pro senex_map, lon, lat, data, latmin=latmin, mindata=mindata, $
+pro senex_map, lon, lat, data, mindata=mindata, $
 	maxdata=maxdata, diff=diff, _extra=_extra
-
-  if n_elements(latmin) eq 0 then latmin = 15
 
   myct,/WhGrYlRd
 
   ; Set up the map region. Suppress lat labels to avoid obscuring the title.
-  ;tvmap,fltarr(2,2),/orthographic,/isotropic,/USA,$
-  tvmap,fltarr(2,2),/isotropic,/USA,limit=[latmin,-130,60,-60],/nodata,$
-        /continents,/grid,/noadvance,/nogylabels, _extra=_extra
+  tvmap,fltarr(2,2),/isotropic,/USA,limit=[25,-100,40,-75],/nodata,$
+        /continents,/noadvance, _extra=_extra
  
   if keyword_set(diff) then myct,/diff,ncolors=30 else myct,33,ncolors=30
 
-  ; Truncate data at latmin to avoid plotting outside the map window.
-  ; The default works well for the DC8 and NASA P3B during Spring ARCTAS
-  IND = where(lat ge latmin)
-
   ; Plot the data, coloring the points by value
-  scatterplot_datacolor,lon[IND],lat[IND],data[IND],/overplot,zmin=mindata,$
+  scatterplot_datacolor,lon,lat,data,/overplot,zmin=mindata,$
         zmax=maxdata,/xstyle,/ystyle,_extra=_extra,$
-        CBposition=[0.2,0.1,0.8,0.13]
+        CBposition=[0.2,-0.1,0.8,-0.07]
  
  
 end

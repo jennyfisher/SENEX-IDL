@@ -179,9 +179,9 @@ endif
 
 ; Set title 
 if keyword_set(model) then begin
-	title = 'Modeled ' + Species + ' on ' + Platform + ' track'
+	title = 'Modeled ' + strupcase(Species) + ' on ' + strupcase(Platform) + ' track'
 endif else begin
-	title = Platform + ' ' + Species
+	title = strupcase(Platform) + ' ' + strupcase(Species)
 endelse
 
 ; Set up plot
