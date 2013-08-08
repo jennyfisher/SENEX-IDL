@@ -100,8 +100,8 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
   ; they have not incorporated their calibrations.
   ; So here we only look at simpile species
   Case field of
-    'alt'    : field = 'GPSAlt'
-    'altp'   : field = 'PAlt'
+    'alt'    : field = 'gpsalt'
+    'altp'   : field = 'palt'
     'lat'    : field = 'latitude'
     'lon'    : field = 'longitude'
     'press'  : field = 'PRESSURE'
@@ -152,16 +152,16 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
       Data = jday + utc / (24. * 3600.) 
  
   ; Special Case for altitude 
-  endif else If (field eq 'GPSAlt' or field eq 'PAlt') then begin
+  endif else If (field eq 'gpsalt' or field eq 'palt') then begin
 
       Print, 'Reading altitude field from file: '+file+' ...'
   
       ; Read the appropriate altitude field
-      s = 'alt = ' + Platform + '.' + field
+      s = 'alt_tmp = ' + Platform + '.' + field
       status = Execute( s )  
 
       ; Convert from m to km
-      Data = alt/1d3
+      Data = alt_tmp/1d3
    
   ; Special Case for SOx
   endif else If field eq 'sox' then begin
