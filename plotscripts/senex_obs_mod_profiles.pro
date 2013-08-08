@@ -100,15 +100,15 @@ for i = 0, n_elements(flightdates)-1 do begin
                                     _extra = _extra)]
    lon =  [lon,get_field_data_senex('lon',platform,flightdates[i], $
                                     _extra = _extra)]
-   doy =  [doy,get_field_data_senex('doy','WP3D',flightdates[i], $
+   doy =  [doy,get_field_data_senex('doy',platform,flightdates[i], $
                                    _extra = _extra )]
  
    ; Read relevant model variables
    species_mod = [species_mod, $
-	get_model_data_senex(species_in,'WP3D',flightdates[i], $
+	get_model_data_senex(species_in,platform,flightdates[i], $
                              _extra = _extra)]
    doy_mod = [doy_mod, $
-	get_model_data_senex('DOY','WP3D',flightdates[i], $
+	get_model_data_senex('DOY',platform,flightdates[i], $
                             _extra = _extra )]
  
 nodata:

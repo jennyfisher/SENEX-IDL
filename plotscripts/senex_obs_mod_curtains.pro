@@ -20,7 +20,7 @@
 ; INPUTS:
 ;	 Species_In - Name of observation variable. e.g. 'CO','ALTP'
 ;			Default is 'CO'.
-;	 Platform   - Name of aircraft. Current options: 'WP3D','P3B'
+;	 Platform   - Name of aircraft. Current options: 'WP3D'
 ;			Default is 'WP3D'.
 ;	 DiagN      - Name of GEOS-Chem diagnostic. e.g. 'IJ-AVG-$'	
 ;	 Tracer     - Number of GEOS-Chem tracer. e.g. 4 (for CO)
@@ -129,7 +129,7 @@ altp = altp*1d-3
 
 ; Get model output for given species 
 if (~keyword_set(obs_only)) then $
-species_mod = get_model_data_senex(species_in, 'WP3D',flightdates, $
+species_mod = get_model_data_senex(species_in, platform,flightdates, $
               _extra=_extra)
 ; If no model output is available, set Obs_Only keyword and skip
 ; irrelevant commands
@@ -138,7 +138,7 @@ if (N_Elements(species_mod) eq 1 ) then obs_only=1
 if (~keyword_set(obs_only)) then begin
 
 ; Get other necessary model parameters, and interpolate model output 
-doy_mod = get_model_data_senex('DOY', 'WP3D', flightdates,_extra=_extra)
+doy_mod = get_model_data_senex('DOY', platform, flightdates,_extra=_extra)
 species_mod = interpol( species_mod, doy_mod, doy )
  
 endif
