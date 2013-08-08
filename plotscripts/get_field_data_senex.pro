@@ -101,6 +101,7 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
   ; So here we only look at simpile species
   Case field of
     'alt'    : field = 'GPSAlt'
+    'altp'    : field = 'PAlt'
     'lat'    : field = 'latitude'
     'lon'    : field = 'longitude'
     'press'  : field = 'PRESSURE'
