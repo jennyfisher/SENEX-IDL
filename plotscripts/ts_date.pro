@@ -6,7 +6,6 @@ pro ts_date, Species, Platform, Flightdates=Flightdates,_extra=_extra
 
   d = get_model_data_senex(Species, Platform,Flightdates,_extra=_extra)
   t = get_model_data_senex('DOY',Platform,Flightdates,_extra=_extra)
-stop
 
   oplot, t, d, color=3, thick=2
 
