@@ -109,6 +109,11 @@ function read_file_model, file, field, ppt=ppt
   ; used in the aircraft data
   ;------
   field = strlowcase( field )
+
+  ; special cases for model name
+  if ( field eq 'no3' ) then field = 'nit'
+  if ( field eq 'hcho') then field = 'ch2o'
+
   ; Case for SENEX
   Case field of
     'co'     :  conv_factor = 1e9    ; v/v -> ppbv
@@ -140,8 +145,6 @@ function read_file_model, file, field, ppt=ppt
     'ca'     : conv_factor = 1e12; pptv 
     else     :  conv_factor = 1
   endcase
-
- if ( field eq 'no3') then field = 'nit'
  
  if ( ~keyword_set(ppt) and (field eq 'so4' or field eq 'so4s' $
        or field eq 'nh4' or field eq 'nit') ) then begin

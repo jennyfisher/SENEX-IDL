@@ -109,6 +109,7 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
     'chocho' : field = 'CHOCHO'
     'co'     : field = 'CO_ppbv'
     'hcho'   : field = 'HCHO_ppbv'
+    'ch2o'   : field = 'HCHO_ppbv'
     'hno3'   : field = 'HNO3_ppbv'
     'hcooh'  : field = 'HCOOH_ppbv'
     'no'     : field = 'NO_ppbv'
