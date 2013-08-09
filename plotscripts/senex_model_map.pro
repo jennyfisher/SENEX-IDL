@@ -60,7 +60,7 @@
 
 pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
 		    mindata=mindata,maxdata=maxdata, unit=unit,            $
-		    oplot_data=oplot_data,save=save,_extra=_extra
+		    oplot_data=oplot_data,save=save,fscale=fscale,_extra=_extra
 
    ; Set defaults
    if n_elements(species_in)  eq 0 then species_in='CO'
@@ -71,6 +71,7 @@ pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
       return
    endif
    if n_elements(alts) eq 0 then alts=[0,12]
+   if n_elements(fscale) eq 0 then fscale=1
 
    ; NRT Directory
 ; test in my directory for now
@@ -105,7 +106,7 @@ pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
 
    ; Read model fields
    ctm_get_data,  DataInfo, 'IJ-AVG-$', filename=file,  tracer=tracer
-   Species_Mod = *(DataInfo.Data)
+   Species_Mod = *(DataInfo.Data) * fscale
 
    ; Get grid information
    GetModelAndGridInfo, DataInfo, ModelInfo, GridInfo

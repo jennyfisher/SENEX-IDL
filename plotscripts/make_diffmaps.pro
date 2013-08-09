@@ -96,9 +96,9 @@ CASE species of
 	Unit = 'ppbv'
     end
     'ISOP' : begin
-	MinData = -2 
-	MaxData = 2
-	Unit = 'ppbC'
+	MinData = -2d3 
+	MaxData = 2d3
+	Unit = 'ppt'
     end
     else:
 ENDCASE

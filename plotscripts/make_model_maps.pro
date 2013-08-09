@@ -70,6 +70,7 @@ endif
 ; Allow user to specify min/max data
 if n_elements(mindata) ne 0 then mindata_in=mindata
 if n_elements(maxdata) ne 0 then maxdata_in=maxdata
+fscale=1
 
 ; For frequently plotted species, specify the min/max and unit to be used. 
 species = strupcase(species)
@@ -91,8 +92,9 @@ CASE species of
     end
     'ISOP' : begin
 	MinData = 0
-	MaxData = 6
-	Unit = 'ppbC'
+	MaxData = 4d3
+	Unit = 'ppt'
+        fscale = 1d3/5
     end
     else:
 ENDCASE
@@ -103,6 +105,7 @@ if ~keyword_set(oplot_data) then oplot_data=0
 
 ; Plot the data over the US
 senex_model_map,species,platform,flightdates=flightdates,mindata=mindata,$
-                  maxdata=maxdata,unit=unit,oplot_data=oplot_data,_extra=_extra
+                  maxdata=maxdata,unit=unit,oplot_data=oplot_data,       $
+		  fscale=fscale,_extra=_extra
  
 end
