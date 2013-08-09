@@ -32,9 +32,9 @@
 ; NOTES:
 ;
 ; EXAMPLE:
-;        SENEX_SPECIESMAP,'CO','DC8',Flightdates='*'
+;        SENEX_SPECIESMAP,'CO','WP3D',Flightdates='*'
 ;
-;        Plots CO from the DC8 flighttrack for all flights
+;        Plots CO from the WP3D flighttrack for all flights
 ;
 ; MODIFICATION HISTORY:
 ;        jaf, 06 Jul 2008: VERSION 1.00
@@ -55,14 +55,14 @@
 pro make_maps,species,platform,flightdates=flightdates,_extra=_extra
 
 ; Set defaults, and alert user to choices being made.
-; Default is to plot CO observations from the DC8 for all dates 
+; Default is to plot CO observations from the WP3D for all dates 
 if N_Elements(species) eq 0 then begin
         species='CO'
         print,'You didn''t specify a species, so CO is being plotted!'
 endif
 if N_Elements(platform) eq 0 then begin
-        platform='DC8'
-        print, 'You didn''t specify a platform, so DC8 is being plotted!'
+        platform='WP3D'
+        print, 'You didn''t specify a platform, so WP3D is being plotted!'
 endif
 if N_Elements(flightdates) eq 0 then begin
         flightdates='2013*'

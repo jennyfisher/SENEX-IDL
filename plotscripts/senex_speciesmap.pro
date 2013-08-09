@@ -48,10 +48,10 @@
 ;        combination, this routine will return to the calling program.
 ;
 ; EXAMPLE:
-;    SENEX_SPECIESMAP,'CO','DC8',FlightDates='FAIRBANKS', $
+;    SENEX_SPECIESMAP,'CO','WP3D',FlightDates='FAIRBANKS', $
 ;                      MinData=0, MaxData=200,/Troposphere,/Model
 ;
-;    Plots modeled CO from the DC8 flighttrack for all flights based
+;    Plots modeled CO from the WP3D flighttrack for all flights based
 ;    out of Fairbanks. Excludes stratospheric air and plots CO on a
 ;    scale from 0 to 200.
 ;
@@ -77,7 +77,7 @@ alts=alts,mindata=mindata,maxdata=maxdata,model=model,save=save, $
 _extra=_extra
  
 ; Set defaults, and alert user to choices being made.
-; Default is to plot CO observations from the DC8 for all dates at ll
+; Default is to plot CO observations from the WP3D for all dates at ll
 ; pressures.
 if N_Elements(species) eq 0 then begin
 	species='CO'
