@@ -74,7 +74,7 @@ CASE species of
 	Unit = 'ppt'
     end
     'SO2' : begin
-	Unit = 'pptv'
+	Unit = 'ppbv'
     end
     'O3' : begin
 	Unit = 'ppbv'
