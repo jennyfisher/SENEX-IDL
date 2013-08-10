@@ -124,9 +124,6 @@ time = get_field_data_senex('utc', platform, flightdates, /minavg, $
 doy =  get_field_data_senex('doy', platform, flightdates, /minavg, $
                              _extra = _extra)
 
-; SENEX altitude is in meters, convert to km
-altp = altp*1d-3
-
 ; Get model output for given species 
 if (~keyword_set(obs_only)) then $
 species_mod = get_model_data_senex(species_in, platform,flightdates, $
