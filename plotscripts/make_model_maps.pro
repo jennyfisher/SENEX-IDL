@@ -96,6 +96,36 @@ CASE species of
 	Unit = 'ppt'
         fscale = 1d3/5
     end
+    'BC' : begin
+	MinData = 0
+	MaxData = 400
+	Unit = 'ng/m3'
+        fscale = 12 / 0.0224
+    end
+    'POA' : begin
+	MinData = 0
+	MaxData = 4 
+	Unit = 'ug/m3'
+        fscale = 12d-3 / 0.0224
+    end
+    'ASOA' : begin
+	MinData = 0
+	MaxData = 4 
+	Unit = 'ug/m3'
+        fscale = 12d-3 / 0.0224
+    end
+    'BBSOA' : begin
+	MinData = 0
+	MaxData = 4 
+	Unit = 'ug/m3'
+        fscale = 12d-3 / 0.0224
+    end
+    'BGSOA' : begin
+	MinData = 0
+	MaxData = 4 
+	Unit = 'ug/m3'
+        fscale = 12d-3 / 0.0224
+    end
     else:
 ENDCASE
 

@@ -27,6 +27,8 @@
 ;        MaxData     - Maximum value to use when plotting species.
 ;        OPlot_Data  - If set, observed values will be plotted over
 ;                      model background
+;        OPlot_Track - If set, flight track will be plotted over
+;                      model background
 ;        Save        - If set, map will be saved as a postscript rather
 ;                      than plotted on the screen
 ;
@@ -59,8 +61,9 @@
 ;-----------------------------------------------------------------------
 
 pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
-		    mindata=mindata,maxdata=maxdata, unit=unit,            $
-		    oplot_data=oplot_data,save=save,fscale=fscale,_extra=_extra
+		    mindata=mindata,maxdata=maxdata, unit=unit,           $
+		    oplot_data=oplot_data,oplot_track=oplot_track,        $
+		    save=save,fscale=fscale,_extra=_extra
 
    ; Set defaults
    if n_elements(species_in)  eq 0 then species_in='CO'
@@ -72,6 +75,10 @@ pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
    endif
    if n_elements(alts) eq 0 then alts=[0,12]
    if n_elements(fscale) eq 0 then fscale=1
+
+   ; Special cases
+   if strupcase(species_in) eq 'BC'  then species_in='BCPI'
+   if strupcase(species_in) eq 'POA' then species_in='OCPI'
 
    ; NRT Directory
 ; test in my directory for now
@@ -107,6 +114,17 @@ pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
    ; Read model fields
    ctm_get_data,  DataInfo, 'IJ-AVG-$', filename=file,  tracer=tracer
    Species_Mod = *(DataInfo.Data) * fscale
+   if (species_in eq 'BCPI') then begin
+      Tracer2 = TracerN[where( strlowcase(TracerName) eq 'bcpo' )]
+      ctm_get_data,  TMPDataInfo, 'IJ-AVG-$', filename=file,  tracer=tracer2
+      Species_Mod = Species_Mod + *(TMPDataInfo.Data) * fscale
+      species_in = 'BC'
+   endif else if (species_in eq 'OCPI') then begin
+      Tracer2 = TracerN[where( strlowcase(TracerName) eq 'ocpo' )]
+      ctm_get_data,  TMPDataInfo, 'IJ-AVG-$', filename=file,  tracer=tracer2
+      Species_Mod = Species_Mod + *(TMPDataInfo.Data) * fscale
+      species_in = 'POA'
+   endif
 
    ; Get grid information
    GetModelAndGridInfo, DataInfo, ModelInfo, GridInfo
@@ -147,14 +165,12 @@ pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
    tvmap, Species_Mod, XX[iFirst:iFirst+NX-1], YY[jFirst:jFirst+NY-1], $
           /isotropic, /USA, limit=[25,-100,40,-75], $
           /fcontour, /continents, /noadvance, title=title,       $
-  	  cbunit='[ppbv]',/cbar, c_levels=indgen(20)*dcolor+mindata, $
+  	  cbunit=unit,/cbar, c_levels=indgen(20)*dcolor+mindata, $
           cbformat=cbformat,_extra=_extra
 
    ; If needed, read and plot observations during flight
-   if Keyword_Set(oplot_data) then begin
+   if Keyword_Set(oplot_data) or keyword_set(oplot_track) then begin
 
-      species = get_field_data_senex(species_in,platform,flightdates,$
-                                     _extra=_extra)
       lat = get_field_data_senex('lat',platform,flightdates,$
                                   _extra=_extra)
       lon = get_field_data_senex('lon',platform,flightdates,$
@@ -162,20 +178,27 @@ pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
       alt_data = get_field_data_senex('altp',platform,flightdates,$
                                   _extra=_extra)
 
-      if ~finite(mean_nan(species)) then begin
-         print,'No data for species '+species+' on '+flightdates
-         goto, nodata
-      endif
-
       ; Select data in the correct alt range
       index = where( alt_data ge min(alts) and alt_data le max(alts) )
-      species = species[index]
-      lat     = lat[index]
-      lon     = lon[index]
+      lat      = lat[index]
+      lon      = lon[index]
+      alt_data = alt_data[index]
 
-      ; Add to map
-      scatterplot_datacolor,lon,lat,species,/overplot,zmin=mindata,$
-         zmax=maxdata,/xstyle,/ystyle,/nocb,_extra=_extra
+      if keyword_set(oplot_data) then begin
+         species = get_field_data_senex(species_in,platform,flightdates,$
+                                        _extra=_extra)
+         if ~finite(mean_nan(species)) then begin
+            print,'No data for species '+species+' on '+flightdates
+            goto, nodata
+         endif
+         species = species[index]
+   
+         ; Add to map
+         scatterplot_datacolor,lon,lat,species,/overplot,zmin=mindata,$
+            zmax=maxdata,/xstyle,/ystyle,/nocb,_extra=_extra
+      endif else $
+         scatterplot_datacolor,lon,lat,alt_data,/overplot,color=!myct.gray50,$
+            /xstyle,/ystyle,/nocb,symsize=0.5,_extra=_extra
 
    nodata:
    endif
@@ -187,6 +210,8 @@ pro senex_model_map,species_in,platform,flightdates=flightdates,alts=alts,$
       s = 'spawn, ''gzip '+file
       status = execute(s)
    endif
+
+   multipanel,/off
 
 end
 

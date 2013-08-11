@@ -95,6 +95,9 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
   field = strlowcase( field )
   platform = strlowcase( platform )
 
+  ; Rename some fields
+  if (field eq 'oc') then field = 'oa'
+
   ; Case for SENEX, lei
   ; Note: The AMS data are very preliminary as 
   ; they have not incorporated their calibrations.
@@ -127,7 +130,6 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
     'so4'    : field = 'AMS_SO4'
     'no3'    : field = 'AMS_NO3'
     'nh4'    : field = 'AMS_NH4'
-    'oa'     : field = 'AMS_Org'
     'cl'     : field = 'AMS_Chl'
     'bc'     : field = 'BC_MASS_90_550_NM_HDSP2'
     else:
@@ -268,14 +270,19 @@ function read_file_field_senex, file, field, platform, ppt=ppt, nss=nss
 
   endif else If field eq 'oa' then begin
   
-      Print, 'Reading OC from file: '+file
+      Print, 'Reading OA from file: '+file
   
-      s = 'oc = ' + Platform + '.AMS_Org'
+      s = 'oa = ' + Platform + '.AMS_Org'
   
       status = Execute( s )
   
-      ; Convert from ug C/m3 to ug/m3
-      Data = oc * 2.1
+;SENEX data already in ug/m3 (jaf, 8/10/13)
+;      ; Convert from ug C/m3 to ug/m3
+;      ;Data = oc * 2.1
+;
+
+       ;;;;; FUDGE FACTOR FOR UNCALIBRATED DATA!!
+       Data = oa / 5.
 
   endif else begin
 

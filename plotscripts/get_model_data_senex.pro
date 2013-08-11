@@ -110,7 +110,8 @@ function read_file_model, file, field, ppt=ppt
   ;------
   field = strlowcase( field )
 
-  ; special cases for model name
+  ; Rename some fields
+  if ( field eq 'oc'  ) then field = 'oa'
   if ( field eq 'no3' ) then field = 'nit'
   if ( field eq 'hcho') then field = 'ch2o'
 
@@ -216,12 +217,75 @@ function read_file_model, file, field, ppt=ppt
     ; Status is success, as long as data contains some elements
     status = n_elements( data ) gt 1
   
-  endif else If ( field eq 'oc' ) then begin
+  endif else If ( field eq 'oa' ) then begin
   
-    Print, 'Reading model OC from file: '+ file +' ...'
+    Print, 'Reading model OA from file: '+ file +' ...'
   
     ; sum up data, and convert to ug/m3
-    Data =  (gc.ocpi + gc.ocpo ) * (1e6*12) / 0.0224
+    ; also multiply by 2.1 to convert from OC --> OA
+    ;ocpi, ocpo are POA; asoa, bbsoa, bgsoa are SOA
+    Data =  ( gc.ocpi + gc.ocpo +             $
+	      gc.asoa + gc.bbsoa + gc.bgsoa ) $
+            * 1e6 * 12 * 2.1 / 0.0224
+  
+    ; Status is success, as long as data contains some elements
+    status = n_elements( data ) gt 1
+  
+  endif else If ( field eq 'poa' ) then begin
+  
+    Print, 'Reading model POA from file: '+ file +' ...'
+  
+    ; sum up data, and convert to ug/m3
+    ; also multiply by 2.1 to convert from OC --> OA
+    ;ocpi, ocpo are POA
+    Data =  ( gc.ocpi + gc.ocpo ) $
+            * 1e6 * 12 * 2.1 / 0.0224
+  
+    ; Status is success, as long as data contains some elements
+    status = n_elements( data ) gt 1
+  
+  endif else If ( field eq 'soa' ) then begin
+  
+    Print, 'Reading model SOA from file: '+ file +' ...'
+  
+    ; sum up data, and convert to ug/m3
+    ; also multiply by 2.1 to convert from OC --> OA
+    ; asoa, bbsoa, bgsoa are SOA
+    Data =  ( gc.asoa + gc.bbsoa + gc.bgsoa ) $
+            * 1e6 * 12 * 2.1 / 0.0224
+  
+    ; Status is success, as long as data contains some elements
+    status = n_elements( data ) gt 1
+  
+  endif else If ( field eq 'asoa' ) then begin
+  
+    Print, 'Reading model aSOA from file: '+ file +' ...'
+  
+    ; sum up data, and convert to ug/m3
+    ; also multiply by 2.1 to convert from OC --> OA
+    Data =  gc.asoa * 1e6 * 12 * 2.1 / 0.0224
+  
+    ; Status is success, as long as data contains some elements
+    status = n_elements( data ) gt 1
+  
+  endif else If ( field eq 'bbsoa' ) then begin
+  
+    Print, 'Reading model bbSOA from file: '+ file +' ...'
+  
+    ; sum up data, and convert to ug/m3
+    ; also multiply by 2.1 to convert from OC --> OA
+    Data =  gc.bbsoa * 1e6 * 12 * 2.1 / 0.0224
+  
+    ; Status is success, as long as data contains some elements
+    status = n_elements( data ) gt 1
+  
+  endif else If ( field eq 'bgsoa' ) then begin
+  
+    Print, 'Reading model bgSOA from file: '+ file +' ...'
+  
+    ; sum up data, and convert to ug/m3
+    ; also multiply by 2.1 to convert from OC --> OA
+    Data =  gc.bgsoa * 1e6 * 12 * 2.1 / 0.0224
   
     ; Status is success, as long as data contains some elements
     status = n_elements( data ) gt 1
