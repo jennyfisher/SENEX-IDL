@@ -67,6 +67,7 @@ pro senex_map, lon, lat, data, mindata=mindata, $
         zmax=maxdata,/xstyle,/ystyle,_extra=_extra,$
         CBposition=[0.2,-0.1,0.8,-0.07]
  
+  multipanel,/off
  
 end
  
